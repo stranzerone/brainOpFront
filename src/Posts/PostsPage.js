@@ -10,6 +10,8 @@ const PostListScreen = () => {
  const [posts, setPosts] = useState([]);
  const [loading, setLoading] = useState(false);
 const navigate = useNavigate()
+const backendUrl = process.env.REACT_APP_API_URL;
+
  useEffect(() => {
     fetchPosts();
  }, []);
@@ -17,9 +19,13 @@ const navigate = useNavigate()
  const fetchPosts = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`https://dummyjson.com/posts?limit=100`);
-      const newPosts = response.data.posts;
+      const response = await axios.get(`${backendUrl}/posts/posts`,{
+        withCredentials:true
+      });
+      const newPosts = response.data;
       setPosts(newPosts);
+   
+      
     } catch (error) {
       console.error('Error fetching posts:', error);
     } finally {
@@ -53,6 +59,8 @@ const navigate = useNavigate()
           <span>Loading...</span>
         </div>
       )}
+      <div>
+      </div>
     </div>
  );
 };

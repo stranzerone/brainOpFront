@@ -37,9 +37,16 @@ const [isChecked,setIsChecked] = useState('')
         withCredentials:true
       });
    
-      console.log(response)
+      
       if (response.status === 200) {
-        navigate('/posts');
+
+        const response2 = await axios.get(`${backendUrl}/users/getCookie`,{
+          withCredentials:true
+        });
+      if(response2.status===200){
+     
+        navigate("/posts")
+      }
       } else if (response.status === 209) {
         setErrors({ email: 'Email already in use' });
       } else {
